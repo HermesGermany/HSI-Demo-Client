@@ -16,7 +16,7 @@ Start the server:
 C:> node server.js
 ```
 
-Open `[http://localhost:8080/hsi/](http://localhost:8080/hsi/)` in your favorite browser.
+Open [`http://localhost:8080/hsi/`](http://localhost:8080/hsi/) in your favorite browser.
 
 To stop the server simply hit CTRL-C and the script should end.
 
