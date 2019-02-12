@@ -1,0 +1,17 @@
+//- widgets/select.pug
+mixin select(pretext, name, entries, followtext)
+  .field(class='field_' + name)
+    .field-label= pretext
+    .field-value
+      .field-value-input(class='field-value-input-' + name)
+        select(
+              id=name,
+              name=name,
+              class='input-select'
+            )
+          each label, value in entries
+            option(
+              value=value,
+              selected=(value == post[name])
+            )= label
+        span.select-followtext= followtext

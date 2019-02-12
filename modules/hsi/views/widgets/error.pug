@@ -1,0 +1,9 @@
+//- widgets/error.pug
+if (error)
+  if (error.response)
+    .error #{error.response.status} #{__(error.response.statusText)}
+      if error.response.data.listOfResultCodes
+        br
+        pre error.response.data.listOfResultCodes: #{JSON.stringify(error.response.data.listOfResultCodes, null, 2)}
+  else
+    .error #{error}

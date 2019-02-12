@@ -1,0 +1,51 @@
+//- index.pug
+extends ../../pages/views/page.pug
+
+include ../../page-elements/views/form/field.pug
+include widgets/defaults.pug
+
+block title
+  | #{__('Create Label for Shipment Order')}
+
+append breadcrumbs
+  li.header-breadcrumb
+    a.header-breadcrumb-link(href='/hsi/shipmentorderlabel/') #{__('Create Label for Shipment Order')}
+
+block content
+  div#hsi.hsi.flex-wrapper
+    include widgets/header.pug
+    #hsi-container.hsi-container.flex-block.flex-center
+      h2 #{__('Create Label for Shipment Order')}
+      include widgets/error.pug
+      if request
+        h3 Request
+        pre= JSON.stringify(request, null, 2)
+      if response
+        h3 Response
+        pre= JSON.stringify(response, null, 2)
+        if pdfFilename
+          h3
+            a.pdf-link(href = '/' + pdfFilename) PDF öffnen
+        if jsonFilename
+          h3
+            a.json-link(href = '/' + jsonFilename, target='_blank') JSON-Datei öffnen
+      else
+        form#shipmentorderlabelform.shipmentorderlabelform(method='POST', action='/hsi/shipmentorderlabel/')
+          + field(__('Shipment Order ID'), {
+              type: 'text',
+              name: 'shipmentOrderID',
+              value: shipmentOrderID || post.shipmentOrderID,
+              size: 30
+          })
+          + field(__('Output Format'), {
+            type: 'radio',
+            name: 'headers.Accept',
+            entries: {
+              'application/shippinglabel-pdf+json': __('PDF Label'),
+              'application/shippinglabel-data+json': __('Label data (JSON)')
+            }
+          })
+          + field('', {
+            type: 'submit',
+            value: __('create label')
+          })

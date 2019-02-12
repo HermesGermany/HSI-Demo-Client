@@ -1,0 +1,38 @@
+//- widgets/parcel.pug
+mixin parcel()
+  include ../../../page-elements/views/form/field.pug
+  include ../../../page-elements/views/form/select.pug
+  fieldset.fieldset.fieldset-parcel
+    legend.fieldset-legend #{__('Parcel details')}
+    + select(__('Parcel class'),
+      'parcel.parcelClass',
+      {
+        '': __('no value'),
+        'XS': 'XS',
+        'S': 'S',
+        'M': 'M',
+        'L': 'L',
+        'XL': 'XL'
+      }
+    )
+    + field(__('Weight'), {
+      type: 'text',
+      name: 'parcel.parcelWeight'
+    }, 'g')
+    + group(__('Package Dimensions'), 'package-dimensions', [{
+        type: 'text',
+        name: 'parcel.parcelWidth',
+        attr: { placeholder: __('Width') },
+        posttext: 'cm'
+      },{
+        type: 'text',
+        name: 'parcel.parcelHeight',
+        attr: { placeholder: __('Height') },
+        posttext: 'cm'
+      }, {
+        type: 'text',
+        name: 'parcel.parcelDepth',
+        attr: { placeholder: __('Depth') },
+        posttext: 'cm'
+      }]
+    )

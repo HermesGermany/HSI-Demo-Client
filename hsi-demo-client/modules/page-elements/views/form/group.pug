@@ -1,0 +1,46 @@
+//- views/form/group.pug
+mixin group(pretext, groupname, fields, posttext)
+  .field(class='field_' + groupname)
+    .field-label= pretext
+    .field-value
+      .field-value-group
+        each field in fields
+          .field-value-input(class='field-value-input-' + (field.class ? field.class : field.name.replace(/\./g, '_')))
+            if (field.type === 'select')
+              select(
+                    id=field.name,
+                    name=field.name,
+                    class='input-select'
+                  )
+                each label, value in field.entries
+                  option(
+                    value=value,
+                    selected=(value == post[field.name])
+                  )= label
+            else
+              if field.entries
+                - i = 0
+                each label, value in field.entries
+                  input(
+                    class='input-' + field.type,
+                    type=field.type,
+                    name=field.name,
+                    value=(field.type != 'radio' ? post[field.name] || value : 'true'),
+                    id=field.name + i,
+                    checked=(field.type == 'radio' && value == post[field.name])
+                  )
+                  label(class=field.type + '-label', for=field.name + i++)= label
+              else
+                input(
+                  class='input-' + field.type,
+                  type=field.type,
+                  id=field.name,
+                  name=field.name,
+                  value=(field.type != 'checkbox' ? post[field.name] || field.value : 'true')
+                  checked=(field.type == 'checkbox' && 'true' == post[field.name])
+                )&attributes(field.attr)
+                if field.posttext
+                  label(class=field.type + '-label', for=field.name)= field.posttext
+          if posttext
+            .field-value-posttext
+              label(class=attr.type + '-label', for=attr.name)= posttext

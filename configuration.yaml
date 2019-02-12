@@ -1,0 +1,130 @@
+#
+#  Configuration for oauth2-client
+#
+gulp:
+  start:
+    development:
+      gulp:
+        - 'lint'
+        - 'build'
+        - 'watch'
+        - 'livereload-start'
+        - 'server-start'
+        - 'tests'
+      build:
+        - 'less'
+        - 'js'
+        - 'locales'
+      tests:
+        - 'test-modules'
+      lint:
+        - 'ejslint'
+        - 'eslint'
+        - 'jsonlint'
+        - 'yamllint'
+        - 'puglint'
+        - 'ejslint'
+      server:
+        - 'server-changed'
+        - 'tests'
+    production:
+      gulp:
+        - 'build'
+        - 'server-start'
+      build:
+        - 'less'
+        - 'js'
+        - 'locales'
+      tests: []
+      lint: []
+      server:
+        - 'server-changed'
+  watch:
+    eslint:
+      - '*.js'
+      - '.eslintrc.js'
+      - 'gulp/**/*.js'
+      - 'lib/**/*.js'
+      - 'modules/**/*.js'
+    js:
+      - 'modules/*/js/*.js'
+    jsonlint:
+      - '*.json'
+      - 'modules/**/*.json'
+      - '.lesshintrc'
+      - '!src/locales/*.json'
+      - '!modules/**/locales/*.json'
+    locales:
+      - 'src/locales/*.json'
+      - 'modules/**/locales/*.json'
+    yamllint:
+      - '*.yaml'
+      - 'modules/**/*.yaml'
+    ejslint-livereload:
+      - 'modules/**/*.ejs'
+    less:
+      - 'src/less/**/*.less'
+      - 'modules/**/*.less'
+    puglint:
+      - 'modules/**/*.pug'
+    server:
+      - 'server.js'
+      - 'modules/*/server/*.js'
+      - 'modules/*/*.yaml'
+    livereload:
+      - 'public/**/*.html'
+      - 'modules/**/*.ejs'
+      - 'modules/**/*.pug'
+      - 'public/img/**/*.*'
+      - 'public/css/*.css'
+    livereload-index:
+      - 'public/js/**/*.js'
+    test-modules:
+      - 'modules/**/tests/model/*.*'
+      - 'modules/**/tests/server/*.*'
+      - 'modules/**/views/**/*.*'
+      - 'htdocs/css/*.css'
+      - 'htdocs/js/**/*.js'
+  tests:
+    modules:
+      - 'modules/**/tests/model/*.js'
+      - 'modules/**/tests/server/*.js'
+      - 'modules/**/tests/views/*.js'
+  build:
+    js:
+      src:
+        - 'modules/*/js/*.js'
+      dest: 'public/js'
+      replace:
+        'modules/([^/]+)/js(/[^/]+)?/.+': '$1$2'
+    less:
+      src: 'src/less/app.less'
+      dest: 'public/css'
+    locales:
+      dest: 'locales'
+    deploy:
+      src:
+        - 'CHANGELOG.md'
+        - 'configuration.yaml'
+        - 'Dockerfile'
+        - 'INSTALL.md'
+        - 'LICENSE'
+        - 'package.json'
+        - 'README.md'
+        - 'server.js'
+        - 'lib/**/*'
+        - 'locales/*'
+        - 'modules/*/*.yaml'
+        - 'modules/*/server/**/*'
+        - 'modules/*/views/**/*'
+        - 'public/*'
+        - 'public/css/*'
+        - 'public/js/**/*'
+      dest: 'deploy/hsi-demo-client'
+
+server:
+  server: ./server.js
+  docroot: ./public
+  modules: ./modules
+  httpPort: 8080
+  verbose: false

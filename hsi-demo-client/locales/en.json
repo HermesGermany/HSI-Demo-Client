@@ -1,0 +1,12 @@
+{
+  "prod": "Production",
+  "test": "Test",
+  "UPPERCASE": "Please use UPPERCASE characters",
+  "not found": "Page not found",
+  "server error": "Server Error",
+  "translate string": "Translate String",
+  "number %s": {
+    "one": "Number one",
+    "other": "Number %s"
+  }
+}

@@ -1,0 +1,552 @@
+/*
+ * Styles for frontend
+ *
+ * (c) Uwe Gerdes, entwicklung@uwegerdes.de
+ */
+body {
+  background-color: #ffffff;
+  border: 0;
+  color: #000000;
+  font-family: 'Lucida Grande', 'Lucida Sans Unicode', Arial, Verdana, sans-serif;
+  font-size: 14px;
+  margin: 0;
+  padding: 0;
+}
+h1 {
+  color: #0091cd;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  margin-top: 0;
+}
+h2 {
+  color: #0091cd;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 0.8rem;
+  margin-top: 0.5rem;
+}
+a {
+  color: #0091cd;
+  text-decoration: underline;
+}
+img {
+  border: 0;
+}
+div {
+  margin: 0;
+  padding: 0;
+}
+.hidden {
+  display: none;
+}
+.error pre {
+  font-size: 0.8em;
+}
+.header.production {
+  background-color: #ffaaaa;
+}
+.field-value-group {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row;
+          flex-flow: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+.field-value-group-input {
+  -webkit-box-flex: 1;
+      -ms-flex: 1 100%;
+          flex: 1 100%;
+}
+@media all and (min-width: 768px) {
+  .field-value-group {
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    width: 50%;
+  }
+  .field-value-group .field-value-input {
+    -webkit-box-flex: 0;
+        -ms-flex: 0 0 49%;
+            flex: 0 0 49%;
+  }
+}
+.fieldset {
+  border: 0;
+  padding: 0;
+}
+.fieldset-legend {
+  font-size: 1.2em;
+  font-weight: bold;
+  padding: 0.5em 0;
+}
+.fieldset-name-address .field-value-input-receiverName_lastname,
+.fieldset-name-address .field-value-input-senderName_lastname {
+  -webkit-box-flex: 1;
+      -ms-flex: 1 0 100%;
+          flex: 1 0 100%;
+  margin-right: 0;
+}
+.fieldset-name-address .field-value-input-receiverAddress_street,
+.fieldset-name-address .field-value-input-senderAddress_street {
+  -webkit-box-flex: 1;
+      -ms-flex: 1 0 70%;
+          flex: 1 0 70%;
+  margin-right: 0.5em;
+}
+@media all and (min-width: 1050px) {
+  .fieldset-name-address .field-value-input-receiverAddress_street,
+  .fieldset-name-address .field-value-input-senderAddress_street {
+    -webkit-box-flex: 1;
+        -ms-flex: 1 0 78%;
+            flex: 1 0 78%;
+  }
+}
+.fieldset-name-address .field-value-input-receiverAddress_houseNumber,
+.fieldset-name-address .field-value-input-senderAddress_houseNumber {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 5em;
+          flex: 0 0 5em;
+}
+.fieldset-name-address .field-value-input-receiverAddress_countryCode,
+.fieldset-name-address .field-value-input-senderAddress_countryCode {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 4em;
+          flex: 0 0 4em;
+  margin-right: 0.5em;
+}
+.fieldset-name-address .field-value-input-receiverAddress_zipCode,
+.fieldset-name-address .field-value-input-senderAddress_zipCode {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 5em;
+          flex: 0 0 5em;
+  margin-right: 0.5em;
+}
+.fieldset-name-address .field-value-input-receiverAddress_town,
+.fieldset-name-address .field-value-input-senderAddress_town {
+  -webkit-box-flex: 1;
+      -ms-flex: 1 0 50%;
+          flex: 1 0 50%;
+}
+.fieldset-name-address .field .field-value .input-text[name='receiverName.title'],
+.fieldset-name-address .field .field-value .input-text[name='senderName.title'] {
+  width: 10em;
+}
+.fieldset-parcel .field-value-input-parcel_parcelWidth,
+.fieldset-parcel .field-value-input-parcel_parcelHeight,
+.fieldset-parcel .field-value-input-parcel_parcelDepth {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 1 30%;
+          flex: 0 1 30%;
+}
+.fieldset-parcel .field .field-value .input-text {
+  margin-right: 0.5em;
+  width: 4em;
+}
+.fieldset-services .field_serviceSelections .field-value-group,
+.fieldset-services .field_cashOnDeliveryService .field-value-group,
+.fieldset-services .field_identService .field-value-group {
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+.fieldset-services .field_serviceSelections .field-value-group .input-checkbox,
+.fieldset-services .field_cashOnDeliveryService .field-value-group .input-checkbox,
+.fieldset-services .field_identService .field-value-group .input-checkbox {
+  margin-left: 0.5em;
+}
+.fieldset-services .field-value .field-value-input-service_householdSignatureService,
+.fieldset-services .field-value .field-value-input-service_signatureService {
+  -ms-flex-preferred-size: 100%;
+      flex-basis: 100%;
+}
+.fieldset-services .field-value .field-value-input-service_cashOnDeliveryService_amount {
+  -ms-flex-preferred-size: 6em;
+      flex-basis: 6em;
+  margin-right: 0.5em;
+}
+.fieldset-services .field-value .field-value-input-service_cashOnDeliveryService_currency {
+  -ms-flex-preferred-size: 5em;
+      flex-basis: 5em;
+}
+.fieldset-services .field-value .field-value-input-service_customerAlertService_notificationNumber {
+  max-width: 15em;
+}
+.fieldset-services .field-value .field-value-input-service_identService_identType {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 1 40%;
+          flex: 0 1 40%;
+  margin-right: 0.5em;
+}
+.fieldset-services .field-value .field-value-input-service_identService_identID {
+  -webkit-box-flex: 1;
+      -ms-flex: 1 0 50%;
+          flex: 1 0 50%;
+}
+.fieldset-services .field-value .field-value-input-service_parcelShopDeliveryService_psID {
+  -webkit-box-flex: 1;
+      -ms-flex: 1 0 100%;
+          flex: 1 0 100%;
+}
+.fieldset-services .field-value .field-value-input-service_parcelShopDeliveryService_psID .input-text[name='service.parcelShopDeliveryService.psID'] {
+  width: 10em;
+}
+.field-value > .field-value-input.field-value-input-jsonRequest {
+  width: 90%;
+}
+.field-value > .field-value-input.field-value-input-jsonRequest .input-textarea {
+  font-size: 0.9em;
+}
+.shipmentInfo .field-value-input-shipmentOrderID {
+  max-width: 9em;
+}
+.shipmentInfo .field-value-input-partnerID {
+  max-width: 7em;
+}
+.shipmentInfo .field-value-input-shipmentOrderStartDate,
+.shipmentInfo .field-value-input-shipmentOrderEndDate {
+  max-width: 7em;
+}
+.shipmentOrder .field-value-input-shipmentID {
+  max-width: 15em;
+}
+.flex-wrapper {
+  -ms-flex-line-pack: start;
+      align-content: flex-start;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row wrap;
+          flex-flow: row wrap;
+}
+.flex-block {
+  -webkit-box-flex: 1;
+      -ms-flex: 1 100%;
+          flex: 1 100%;
+}
+@media all and (min-width: 768px) {
+  .flex-left {
+    -webkit-box-flex: 2;
+        -ms-flex: 2 0 auto;
+            flex: 2 0 auto;
+    -webkit-box-ordinal-group: 2;
+        -ms-flex-order: 1;
+            order: 1;
+  }
+  .flex-center {
+    -webkit-box-flex: 5;
+        -ms-flex: 5 80%;
+            flex: 5 80%;
+    -webkit-box-ordinal-group: 2;
+        -ms-flex-order: 1;
+            order: 1;
+  }
+  .flex-right {
+    -webkit-box-flex: 1;
+        -ms-flex: 1 15%;
+            flex: 1 15%;
+    -webkit-box-ordinal-group: 3;
+        -ms-flex-order: 2;
+            order: 2;
+  }
+}
+@media all and (min-width: 1024px) {
+  .flex-left {
+    -webkit-box-flex: 2;
+        -ms-flex: 2 0 auto;
+            flex: 2 0 auto;
+    -webkit-box-ordinal-group: 2;
+        -ms-flex-order: 1;
+            order: 1;
+  }
+  .flex-center {
+    -webkit-box-flex: 8;
+        -ms-flex: 8 0 65%;
+            flex: 8 0 65%;
+    -webkit-box-ordinal-group: 3;
+        -ms-flex-order: 2;
+            order: 2;
+  }
+  .flex-right {
+    -webkit-box-flex: 1;
+        -ms-flex: 1 0 8%;
+            flex: 1 0 8%;
+    -webkit-box-ordinal-group: 4;
+        -ms-flex-order: 3;
+            order: 3;
+  }
+  .flex-footer {
+    -webkit-box-ordinal-group: 5;
+        -ms-flex-order: 4;
+            order: 4;
+  }
+}
+.colored .flex-wrapper {
+  background-color: #cccccc;
+}
+.colored .flex-block {
+  background-color: #ffffcc;
+}
+.colored .flex-left {
+  background-color: #ffcccc;
+}
+.colored .flex-center {
+  background-color: #ccffcc;
+}
+.colored .flex-right {
+  background-color: #ccccff;
+}
+.colored .flex-footer {
+  background-color: #ccffff;
+}
+.footer {
+  background-color: #f0f0f0;
+  font-size: 0.8em;
+}
+.footer-content {
+  margin: 0 auto;
+  max-width: 1200px;
+  padding: 0 20px;
+}
+.field {
+  background-color: #0091cd;
+  color: #ffffff;
+  margin: 0 0 2px;
+  padding: 1em;
+}
+.field-label {
+  display: block;
+  margin: 0 0 0.5em;
+}
+.field-label-empty {
+  margin: 0;
+}
+.field-label-textarea {
+  -ms-flex-item-align: start;
+      align-self: flex-start;
+  padding-top: 0.5em;
+}
+.field-value-input {
+  margin-bottom: 0.5em;
+  width: 100%;
+}
+.field-value-input:last-child {
+  margin-bottom: 0;
+}
+.field-value .input-text,
+.field-value .input-email,
+.field-value .input-password {
+  border: 1px solid #666666;
+  border-radius: 5px;
+  padding: 4px 6px;
+  width: 100%;
+}
+.field-value .input-checkbox {
+  opacity: 0;
+}
+.field-value .input-checkbox + .checkbox-label {
+  display: inline-block;
+  line-height: 1.5em;
+  margin-left: -20px;
+  padding: 3px 0;
+}
+.field-value .input-checkbox + .checkbox-label:before {
+  content: '\2610';
+  float: left;
+  font-size: 1.5em;
+  line-height: 1em;
+  padding: 0 0.3em 0 0;
+}
+.field-value .input-checkbox:checked + .checkbox-label:before {
+  content: '\2611';
+}
+.field-value .input-radio {
+  opacity: 0;
+}
+.field-value .input-radio + .radio-label {
+  display: inline-block;
+  line-height: 1.5em;
+  padding: 3px 0 0;
+}
+.field-value .input-radio + .radio-label:nth-child(2) {
+  margin-left: -20px;
+}
+.field-value .input-radio + .radio-label:before {
+  content: '\25CE';
+  float: left;
+  font-size: 1.5em;
+  line-height: 0.8em;
+  padding: 0 0.3em 0 0;
+}
+.field-value .input-radio:checked + .radio-label:before {
+  content: '\25C9';
+}
+.field-value .input-select {
+  border: 1px solid #666666;
+  border-radius: 5px;
+  margin-right: 0.5em;
+  padding: 3px 6px;
+}
+.field-value .input-textarea {
+  border: 1px solid #666666;
+  border-radius: 5px;
+  font-family: 'Lucida Grande', 'Lucida Sans Unicode', Arial, Verdana, sans-serif;
+  margin-right: 0.5em;
+  padding: 4px 6px;
+  width: 100%;
+}
+.field-value .input-button,
+.field-value .input-submit {
+  border: 1px solid #666666;
+  border-radius: 5px;
+  margin-right: 0.5em;
+  padding: 4px 6px;
+}
+@media all and (min-width: 768px) {
+  .field {
+    -webkit-box-align: baseline;
+        -ms-flex-align: baseline;
+            align-items: baseline;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+  .field-label {
+    -ms-flex-preferred-size: 20%;
+        flex-basis: 20%;
+    -webkit-box-flex: 1;
+        -ms-flex-positive: 1;
+            flex-grow: 1;
+    padding-right: 1em;
+    text-align: right;
+  }
+  .field-value {
+    -ms-flex-preferred-size: 80%;
+        flex-basis: 80%;
+    -webkit-box-flex: 1;
+        -ms-flex-positive: 1;
+            flex-grow: 1;
+  }
+  .field-value > .field-value-input {
+    width: 50%;
+  }
+}
+.header {
+  background-color: #f0f0f0;
+}
+.header-content {
+  margin: 0 auto;
+  max-width: calc(1200px + 2em);
+  padding: 0 1em;
+}
+.header-content .login-status {
+  text-align: right;
+}
+.header-content .login-status-login,
+.header-content .login-status-logout,
+.header-content .login-status-ok {
+  display: inline-block;
+  padding: 1em;
+}
+.header-content .login-status-login:hover,
+.header-content .login-status-logout:hover {
+  background-color: #ffffff;
+  color: #666666;
+}
+.header-content .login-status .login-link,
+.header-content .login-status .logout-link {
+  color: #000000;
+  text-decoration: none;
+}
+.header-content .flex-left {
+  -webkit-box-flex: 2;
+      -ms-flex: 2 0 auto;
+          flex: 2 0 auto;
+  -webkit-box-ordinal-group: 2;
+      -ms-flex-order: 1;
+          order: 1;
+}
+.header-content .flex-right {
+  -webkit-box-flex: 1;
+      -ms-flex: 1 0 auto;
+          flex: 1 0 auto;
+  -webkit-box-ordinal-group: 3;
+      -ms-flex-order: 2;
+          order: 2;
+}
+.header-breadcrumbs {
+  list-style-type: none;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+}
+.header-breadcrumb {
+  float: left;
+}
+.header-breadcrumb-link {
+  color: #000000;
+  display: block;
+  padding: 1em;
+  text-align: center;
+  text-decoration: none;
+}
+.header-breadcrumb-link:hover {
+  background-color: #ffffff;
+  color: #666666;
+}
+.header-breadcrumb-link:before {
+  content: '\0203A  ';
+}
+.header-breadcrumb:first-child .header-breadcrumb-link:before {
+  content: '';
+}
+.header-breadcrumb-label {
+  color: #000000;
+  padding: 1em;
+}
+.header-breadcrumb-label:before {
+  content: '> ';
+}
+.page {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  min-height: 100vh;
+}
+.header {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 1%;
+          flex: 0 0 1%;
+}
+.content {
+  -webkit-box-flex: 1;
+      -ms-flex: 1 0 90%;
+          flex: 1 0 90%;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1200px;
+  padding: 2em 1em;
+  width: calc(100% - 2em);
+}
+.footer {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 1%;
+          flex: 0 0 1%;
+}
+.error {
+  background: #ffcccc;
+  border: 1px solid #ff6666;
+  font-size: 1.25em;
+  margin: 0 0 0.5em;
+  padding: 1em;
+}

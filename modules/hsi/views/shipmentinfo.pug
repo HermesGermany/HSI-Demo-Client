@@ -1,0 +1,77 @@
+//- index.pug
+extends ../../pages/views/page.pug
+include ../../page-elements/views/form/field.pug
+include ../../page-elements/views/form/select.pug
+include widgets/defaults.pug
+include widgets/name-address.pug
+include widgets/parcel.pug
+include widgets/services.pug
+
+block title
+  | #{__('Get Shipment Order Info')}
+
+append breadcrumbs
+  li.header-breadcrumb
+    a.header-breadcrumb-link(href='/hsi/shipmentinfo/') #{__('Get Shipment Order Info')}
+
+block content
+  div#hsi.hsi.flex-wrapper
+    include widgets/header.pug
+    #hsi-container.hsi-container.flex-block.flex-center
+      h2 #{__('Get Shipment Order Info')}
+      include widgets/error.pug
+      if request
+        h3 Request
+        pre= JSON.stringify(request, null, 2)
+      if response
+        h3 Response
+        pre= JSON.stringify(response, null, 2)
+      form#shipmentinfo.shipmentinfo(method='POST', action='/hsi/shipmentinfo/')
+        + field(__('Shipment Order ID'), {
+            type: 'text',
+            name: 'shipmentOrderID'
+        })
+        + field(__('Shipment Order ID'), {
+            type: 'text',
+            name: 'shipmentOrderID'
+        })
+        + field(__('Shipment Order ID'), {
+            type: 'text',
+            name: 'shipmentOrderID'
+        })
+        + field(__('Partner ID'), {
+            type: 'text',
+            name: 'partnerID'
+        })
+        + field(__('Partner ID'), {
+            type: 'text',
+            name: 'partnerID'
+        })
+        + select(__('Shipment Order State'),
+          name + 'Name.gender', 
+          { 
+            '': __('all'), 
+            CREATED : 'CREATED',
+            DELETED : 'DELETED',
+            PLACED : 'PLACED',
+            ARCHIVED : 'ARCHIVED',
+            FAILED : 'FAILED'
+          }
+        )
+        + field(__('Start Date'), {
+            type: 'text',
+            name: 'shipmentOrderStartDate',
+            value: post.shipmentOrderStartDate,
+            placeholder: 'YYYY-MM-DD'
+        })
+        + field(__('End Date'), {
+            type: 'text',
+            name: 'shipmentOrderEndDate',
+            value: post.shipmentOrderEndDate,
+            placeholder: 'YYYY-MM-DD'
+        })
+        + field('', {
+          type: 'submit',
+          value: __('create shipment'),
+          class: 'submit'
+        })
