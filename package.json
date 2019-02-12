@@ -1,21 +1,17 @@
 {
-  "name": "expressjs-boilerplate",
-  "description": "boilerplate for nodejs docker with expressjs with pug and ejs for html frontend",
-  "version": "0.0.13",
+  "name": "hsi-demo-client",
+  "description": "hermes shipping interface demo client for nodejs / docker with html frontend",
+  "version": "0.1.1",
   "keywords": [
-    "boilerplate",
-    "docker",
+    "hermes",
+    "shipping",
     "node",
-    "expressjs",
-    "ejs",
-    "oauth2",
-    "pug",
-    "gulp"
+    "oauth2"
   ],
   "license": "MIT",
   "author": {
     "name": "Uwe Gerdes",
-    "email": "entwicklung@uwegerdes.de"
+    "email": "Uwe.Gerdes.ext@hermesworld.com"
   },
   "engines": {
     "node": ">=8.10.0"
