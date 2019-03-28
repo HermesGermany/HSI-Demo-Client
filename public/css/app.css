@@ -148,15 +148,13 @@ div {
   width: 4em;
 }
 .fieldset-services .field_serviceSelections .field-value-group,
-.fieldset-services .field_cashOnDeliveryService .field-value-group,
-.fieldset-services .field_identService .field-value-group {
+.fieldset-services .field_cashOnDeliveryService .field-value-group {
   -webkit-box-pack: start;
       -ms-flex-pack: start;
           justify-content: flex-start;
 }
 .fieldset-services .field_serviceSelections .field-value-group .input-checkbox,
-.fieldset-services .field_cashOnDeliveryService .field-value-group .input-checkbox,
-.fieldset-services .field_identService .field-value-group .input-checkbox {
+.fieldset-services .field_cashOnDeliveryService .field-value-group .input-checkbox {
   margin-left: 0.5em;
 }
 .fieldset-services .field-value .field-value-input-service_householdSignatureService,

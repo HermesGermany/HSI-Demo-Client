@@ -25,14 +25,16 @@ mixin services()
         type: 'checkbox',
         name: 'service.householdSignatureService',
         posttext: __('Household Signature')
-      }
-      ]
+      }]
     )
-      //-, {
-        //-type: 'checkbox',
-        //-name: 'service.signatureService',
-        //-posttext: __('Signature Service')
-      //-}
+    + select(__('Signature Service'),
+      'service.signatureService',
+      {
+        '': __('no value'),
+        'true': __('signature'),
+        'false': __('no signature')
+      }, __('Should be ignored')
+    )
     + group(__('Cash on Delivery Service'), 'cashOnDeliveryService', [{
         type: 'text',
         name: 'service.cashOnDeliveryService.amount',
@@ -78,6 +80,23 @@ mixin services()
         attr: { 
           placeholder: __('Ident ID'),
           title: __('UPPERCASE')
+        }
+      },
+      {
+        type: 'text',
+        name: 'service.identService.identVerifyBirthday',
+        attr: {
+          placeholder: __('Ident verify birthday (yyyy-mm-dd)'),
+          title: __('optional')
+        }
+      },
+      {
+        type: 'select',
+        name: 'service.identService.identVerifyFsk',
+        entries: {
+          '': __('No FSK'),
+          '16': __('FSK 16'),
+          '18': __('FSK 18')
         }
       }]
     )

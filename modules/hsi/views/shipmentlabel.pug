@@ -32,6 +32,11 @@ block content
       else
         form#shipmentlabelform.shipmentlabelform(method='POST', action='/hsi/shipmentlabel/')
           + nameAddress('receiver', __('Receiver'))
+          //-+ field(__('Receiver contact mobile (PL)'), {
+          //-  type: 'text',
+          //-  name: 'receiverContact.mobile',
+          //-  value: post['receiverContact.mobile']
+          //-})
           + nameAddress('sender', __('Sender'))
           + parcel()
           + services()
@@ -41,6 +46,11 @@ block content
                 type: 'text',
                 name: 'clientReference',
                 value: post.clientReference
+            })
+            + field(__('Client Reference 2'), {
+                type: 'text',
+                name: 'clientReference2',
+                value: post.clientReference2
             })
             + field(__('Mandator'), {
                 type: 'text',
