@@ -4,6 +4,8 @@
 
 Node.js: [download](https://nodejs.org/en/download/) latest LTS or Current version and install.
 
+Git clone or download zip and unpack this project to a directory on your computer.
+
 Open a terminal in the project directory and install the node dependencies (only once) with:
 
 ```
@@ -35,6 +37,12 @@ strict-ssl = false
 ```
 
 Please add the proxy information to the file `modules/hsi/configuration.yaml` so the HSI Demo Client gets access to the Hermes servers.
+
+```
+proxy:
+  host: 'proxyhostname'
+  port: 8080
+```
 
 ## Install with Docker
 

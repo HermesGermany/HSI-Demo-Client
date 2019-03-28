@@ -1,5 +1,8 @@
 # Changelog
 
+## 0 1.2
+added some fields
+
 ## 0.1.1
 updated docs
 

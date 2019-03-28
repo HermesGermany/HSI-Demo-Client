@@ -1,12 +1,10 @@
 {
-  "name": "hsi-demo-client",
-  "description": "hermes shipping interface demo client for nodejs / docker with html frontend",
-  "version": "0.1.1",
+  "name": "expressjs-boilerplate",
+  "description": "HSI-Demo-Client",
+  "version": "0.1.2",
   "keywords": [
-    "hermes",
-    "shipping",
-    "node",
-    "oauth2"
+    "Hermes Germany",
+    "Hermes Shipping Interface"
   ],
   "license": "MIT",
   "author": {
