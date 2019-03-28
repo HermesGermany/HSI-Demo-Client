@@ -158,6 +158,7 @@ div {
   margin-left: 0.5em;
 }
 .fieldset-services .field-value .field-value-input-service_householdSignatureService,
+.fieldset-services .field-value .field-value-input-service_redirectionProhibitedService,
 .fieldset-services .field-value .field-value-input-service_signatureService {
   -ms-flex-preferred-size: 100%;
       flex-basis: 100%;

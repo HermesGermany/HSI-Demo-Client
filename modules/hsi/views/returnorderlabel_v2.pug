@@ -40,6 +40,11 @@ block content
               value: returnOrderID || post.returnOrderID,
               size: 30
           })
+          + field(__('Client Reference 2'), {
+              type: 'text',
+              name: 'clientReference2',
+              value: post.clientReference2
+          })
           + field(__('Output Format'), {
             type: 'radio',
             name: 'headers.Accept',

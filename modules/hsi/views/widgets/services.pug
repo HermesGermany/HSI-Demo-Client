@@ -25,6 +25,10 @@ mixin services()
         type: 'checkbox',
         name: 'service.householdSignatureService',
         posttext: __('Household Signature')
+      }, {
+        type: 'checkbox',
+        name: 'service.redirectionProhibitedService',
+        posttext: __('Redirection Prohibited')
       }]
     )
     + select(__('Signature Service'),
