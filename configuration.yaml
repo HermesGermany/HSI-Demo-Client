@@ -1,6 +1,11 @@
 #
 #  Configuration for oauth2-client
 #
+gulp:
+  build:
+    locales:
+      dest: 'locales'
+
 server:
   server: ./server.js
   docroot: ./public
