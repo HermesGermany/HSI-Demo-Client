@@ -28,7 +28,7 @@ block content
         pre= JSON.stringify(response, null, 2)
         if pdfFilename
           h3
-            a.pdf-link(href = '/' + pdfFilename, target='_blank') #{__('Open PDF')}
+            a.pdf-link(href = '/' + pdfFilename) #{__('Open PDF')}
         if pngFilename
           h3
             a.pdf-link(href = '/' + pngFilename, target='_blank') #{__('Open QR Code')}

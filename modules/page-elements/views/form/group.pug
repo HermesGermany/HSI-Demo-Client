@@ -12,11 +12,11 @@ mixin group(pretext, groupname, fields, posttext)
                     name=field.name,
                     class='input-select'
                   )
-                each label, value in field.entries
+                each value in Object.keys(field.entries).sort()
                   option(
                     value=value,
                     selected=(value == post[field.name])
-                  )= label
+                  )= field.entries[value]
             else
               if field.entries
                 - i = 0

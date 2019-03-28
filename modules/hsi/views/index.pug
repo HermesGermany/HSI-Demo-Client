@@ -44,9 +44,8 @@ block content
             a.link-shipmentstatus(href='/hsi/shipmentstatus/') #{__('Get Shipment Status (14/20 digit ShipmentID / Barcode)')}
           li
             a.link-shipmenthistory(href='/hsi/shipmenthistory/') #{__('Get Shipment History (14/20 digit ShipmentID / Barcode)')}
-          if process.env.NODE_ENV == 'development'
-            li
-              a.link-jsoninput(href='/hsi/jsoninput/') #{__('JSON-Request-Input')}
+          li
+            a.link-jsoninput(href='/hsi/jsoninput/') #{__('JSON-Request-Input')}
       else
         h2.subheadline #{__('Login')}
         if (error)
