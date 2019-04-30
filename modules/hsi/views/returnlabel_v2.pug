@@ -8,17 +8,17 @@ include widgets/parcel.pug
 include widgets/services.pug
 
 block title
-  | #{__('Create Return Order and Label')}
+  | #{__('Create Return Order and Label (Version 2)')}
 
 append breadcrumbs
   li.header-breadcrumb
-    a.header-breadcrumb-link(href='/hsi/returnlabel_v2/') #{__('Create Return Order and Label')}
+    a.header-breadcrumb-link(href='/hsi/returnlabel_v2/') #{__('Create Return Order and Label (Version 2)')}
 
 block content
   div#hsi.hsi.flex-wrapper
     include widgets/header.pug
     #hsi-container.hsi-container.flex-block.flex-center
-      h2 #{__('Create Return Order and Label')}
+      h2 #{__('Create Return Order and Label (Version 2)')}
       include widgets/error.pug
       if request
         h3 Request

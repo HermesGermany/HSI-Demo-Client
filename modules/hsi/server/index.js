@@ -15,6 +15,7 @@ router.get('/', controller.index);
 router.post('/', controller.index);
 
 router.get('/logout/', controller.logout);
+router.get('/authcode', controller.callback);
 
 router.get('/shipmentorder/', controller.execPostRequest);
 router.post('/shipmentorder/', controller.execPostRequest);
@@ -39,6 +40,9 @@ router.post('/returnorderlabel_v2/', controller.execPostRequest);
 
 router.get('/returnlabel_v2/', controller.execPostRequest);
 router.post('/returnlabel_v2/', controller.execPostRequest);
+
+router.get('/returnpickuporder/', controller.execPostRequest);
+router.post('/returnpickuporder/', controller.execPostRequest);
 
 router.get('/shipmentinfo/', controller.execGetRequest);
 router.post('/shipmentinfo/', controller.execGetRequest);

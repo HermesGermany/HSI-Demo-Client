@@ -8,6 +8,12 @@ HSI:
   authURL:
     int: https://authme-int.myhermes.de/authorization-facade/oauth2/access_token
     prod: https://authme.myhermes.de/authorization-facade/oauth2/access_token
+  codeURL:
+    int: https://authme-int.myhermes.de/authorization-facade/oauth2/authorize
+    prod: https://authme.myhermes.de/authorization-facade/oauth2/authorize
+  infoURL:
+    int: https://authme-int.myhermes.de/authorization-facade/oauth2/tokeninfo
+    prod: https://authme.myhermes.de/authorization-facade/oauth2/tokeninfo
   baseURL:
     int: https://de-api-int.hermesworld.com/esb-webservice-gateway/services/rest/1/sci
     prod: https://de-api.hermesworld.com/esb-webservice-gateway/services/rest/1/sci
@@ -24,3 +30,5 @@ HSI:
   returnorder_v2Path: /v2/returnorders
   returnlabel_v2Path: /v2/returnorders/labels
   returnorderlabel_v2Path: /v2/returnorders/:returnOrderID:/labels
+
+  returnpickuporderPath: /v1/returnpickuporders

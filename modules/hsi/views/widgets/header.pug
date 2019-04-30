@@ -2,4 +2,4 @@
 
 #head.flex-block.flex-header
   #header-wrapper.flex-wrapper
-    h1#headline.headline.flex-block.flex-left= module.name + ' ' + (session && session.authData && session.authData.targetEnv ? __(session.authData.targetEnv) : '')
+    h1#headline.headline.flex-block.flex-left= module.name + ' ' + (locals.targetEnv ? __(targetEnv) : '')
