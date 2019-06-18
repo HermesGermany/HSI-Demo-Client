@@ -8,23 +8,23 @@ include widgets/parcel.pug
 include widgets/services.pug
 
 block title
-  | #{__('Get Shipment Order Info')}
+  | #{__('Shipment Order List')}
 
 append breadcrumbs
   li.header-breadcrumb
-    a.header-breadcrumb-link(href='/hsi/shipmentinfo/') #{__('Get Shipment Order Info')}
+    a.header-breadcrumb-link(href='/hsi/shipmentorderlist/') #{__('Shipment Order List')}
 
 block content
   div#hsi.hsi.flex-wrapper
     include widgets/header.pug
     #hsi-container.hsi-container.flex-block.flex-center
-      h2 #{__('Get Shipment Order Info')}
+      h2 #{__('Shipment Order List')}
       include widgets/error.pug
       include widgets/request.pug
       if response
         h3 Response
         pre= JSON.stringify(response, null, 2)
-      form#shipmentinfo.shipmentinfo(method='POST', action='/hsi/shipmentinfo/')
+      form#shipmentorderlist.shipmentorderlist(method='POST', action='/hsi/shipmentorderlist/')
         + field(__('Shipment Order ID'), {
             type: 'text',
             name: 'shipmentOrderID'
@@ -37,25 +37,6 @@ block content
             type: 'text',
             name: 'shipmentOrderID'
         })
-        + field(__('Partner ID'), {
-            type: 'text',
-            name: 'partnerID'
-        })
-        + field(__('Partner ID'), {
-            type: 'text',
-            name: 'partnerID'
-        })
-        + select(__('Shipment Order State'),
-          name + 'Name.gender', 
-          { 
-            '': __('all'), 
-            CREATED : 'CREATED',
-            DELETED : 'DELETED',
-            PLACED : 'PLACED',
-            ARCHIVED : 'ARCHIVED',
-            FAILED : 'FAILED'
-          }
-        )
         + field(__('Start Date'), {
             type: 'text',
             name: 'shipmentOrderStartDate',
@@ -70,6 +51,6 @@ block content
         })
         + field('', {
           type: 'submit',
-          value: __('create shipment'),
+          value: __('search'),
           class: 'submit'
         })

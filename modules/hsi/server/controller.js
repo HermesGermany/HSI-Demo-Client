@@ -28,8 +28,8 @@ const hsiConfig = moduleConfig.HSI;
 const index = async (req, res) => {
   let templateData = getServerData(req);
   let statusCode = 200;
-  if (req.method === 'POST' && req.body && 
-    req.body.loginDetails === 'authorization_code' && 
+  if (req.method === 'POST' && req.body &&
+    req.body.loginDetails === 'authorization_code' &&
     req.body.client_id &&
     req.body.redirect_uri) {
     const codeData = {
@@ -169,7 +169,11 @@ const jsoninput = async (req, res) => {
     templateData.post = req.body;
     try {
       const parsedJson = JSON.parse(req.body.jsonRequest);
-      templateData.post = json2form(parsedJson.data);
+      if (parsedJson.data) {
+        templateData.post = json2form(parsedJson.data);
+      } else {
+        templateData.post = json2form(parsedJson);
+      }
       reqPath = req.body.route;
     } catch (error) {
       templateData.error = error;
@@ -523,6 +527,8 @@ function setValue(obj, keys, value) {
     } else {
       if (value === 'true') {
         obj[key] = true;
+      } else if (value === 'false') {
+        obj[key] = false;
       } else {
         obj[key] = value;
       }

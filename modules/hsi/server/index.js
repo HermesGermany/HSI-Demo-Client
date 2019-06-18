@@ -26,6 +26,9 @@ router.post('/shipmentorderlabel/', controller.execPostRequest);
 router.get('/shipmentlabel/', controller.execPostRequest);
 router.post('/shipmentlabel/', controller.execPostRequest);
 
+router.get('/shipmentorderlist/', controller.execGetRequest);
+router.post('/shipmentorderlist/', controller.execGetRequest);
+
 router.get('/returnorder_v1/', controller.execPostRequest);
 router.post('/returnorder_v1/', controller.execPostRequest);
 

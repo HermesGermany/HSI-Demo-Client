@@ -23,13 +23,21 @@ mixin services()
         posttext: __('Next Day Delivery')
       }, {
         type: 'checkbox',
-        name: 'service.householdSignatureService',
-        posttext: __('Household Signature')
-      }, {
-        type: 'checkbox',
         name: 'service.redirectionProhibitedService',
         posttext: __('Redirection Prohibited')
+      }, {
+        type: 'checkbox',
+        name: 'service.excludeParcelShopAuthorization',
+        posttext: __('Exclude Authorization at Parcel Shop')
       }]
+    )
+    + select(__('Household Signature'),
+      'service.householdSignatureService',
+      {
+        '': __('no value'),
+        'true': __('yes'),
+        'false': __('no')
+      }
     )
     + select(__('Signature Service'),
       'service.signatureService',
@@ -39,16 +47,28 @@ mixin services()
         'false': __('no signature')
       }, __('Should be ignored')
     )
-    + group(__('Cash on Delivery Service'), 'cashOnDeliveryService', [{
-        type: 'text',
-        name: 'service.cashOnDeliveryService.amount',
-        attr: { placeholder: __('Amount') }
-      },
-      {
-        type: 'text',
-        name: 'service.cashOnDeliveryService.currency',
-        attr: { placeholder: __('Currency') }
-      }]
+    + group(__('Cash on Delivery Service'), 'cashOnDeliveryService',
+      [
+        {
+          type: 'text',
+          name: 'service.cashOnDeliveryService.amount',
+          attr: { placeholder: __('COD Amount'),  title: __('COD Amount') }
+        },
+        {
+          type: 'text',
+          name: 'service.cashOnDeliveryService.currency',
+          attr: { placeholder: __('COD Currency'), title: __('COD Currency') }
+        },{
+          type: 'text',
+          name: 'service.cashOnDeliveryService.bankTransferAmount',
+          attr: { placeholder: __('Bank Transfer Amount'), title: __('Bank Transfer Amount') }
+        },
+        {
+          type: 'text',
+          name: 'service.cashOnDeliveryService.bankTransferCurrency',
+          attr: { placeholder: __('Bank Transfer Currency'), title: __('Bank Transfer Currency') }
+        }
+      ]
     )
     + select(__('Customer Alert Notification Type'),
       'service.customerAlertService.notificationType',

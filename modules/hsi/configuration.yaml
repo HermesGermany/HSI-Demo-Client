@@ -18,6 +18,7 @@ HSI:
     int: https://de-api-int.hermesworld.com/esb-webservice-gateway/services/rest/1/sci
     prod: https://de-api.hermesworld.com/esb-webservice-gateway/services/rest/1/sci
 
+  shipmentorderlistPath: /v1/shipmentorders
   shipmentorderPath: /v1/shipmentorders
   shipmentorderlabelPath: /v1/shipmentorders/:shipmentOrderID:/labels
   shipmentlabelPath: /v1/shipmentorders/labels

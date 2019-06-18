@@ -173,18 +173,22 @@ div {
 }
 .fieldset-services .field-value .field-value-input-service_householdSignatureService,
 .fieldset-services .field-value .field-value-input-service_redirectionProhibitedService,
+.fieldset-services .field-value .field-value-input-service_excludeParcelShopAuthorization,
 .fieldset-services .field-value .field-value-input-service_signatureService {
   -ms-flex-preferred-size: 100%;
       flex-basis: 100%;
 }
-.fieldset-services .field-value .field-value-input-service_cashOnDeliveryService_amount {
+.fieldset-services .field-value .field-value-input-service_cashOnDeliveryService_amount,
+.fieldset-services .field-value .field-value-input-service_cashOnDeliveryService_bankTransferAmount {
   -ms-flex-preferred-size: 6em;
       flex-basis: 6em;
   margin-right: 0.5em;
 }
-.fieldset-services .field-value .field-value-input-service_cashOnDeliveryService_currency {
-  -ms-flex-preferred-size: 5em;
-      flex-basis: 5em;
+.fieldset-services .field-value .field-value-input-service_cashOnDeliveryService_currency,
+.fieldset-services .field-value .field-value-input-service_cashOnDeliveryService_bankTransferCurrency {
+  -ms-flex-preferred-size: 4em;
+      flex-basis: 4em;
+  margin-right: 1.5em;
 }
 .fieldset-services .field-value .field-value-input-service_customerAlertService_notificationNumber {
   max-width: 15em;
@@ -214,14 +218,18 @@ div {
 .field-value > .field-value-input.field-value-input-jsonRequest .input-textarea {
   font-size: 0.9em;
 }
-.shipmentInfo .field-value-input-shipmentOrderID {
+.shipmentInfo .field-value-input-shipmentOrderID,
+.shipmentorderlist .field-value-input-shipmentOrderID {
   max-width: 9em;
 }
-.shipmentInfo .field-value-input-partnerID {
+.shipmentInfo .field-value-input-partnerID,
+.shipmentorderlist .field-value-input-partnerID {
   max-width: 7em;
 }
 .shipmentInfo .field-value-input-shipmentOrderStartDate,
-.shipmentInfo .field-value-input-shipmentOrderEndDate {
+.shipmentorderlist .field-value-input-shipmentOrderStartDate,
+.shipmentInfo .field-value-input-shipmentOrderEndDate,
+.shipmentorderlist .field-value-input-shipmentOrderEndDate {
   max-width: 7em;
 }
 .shipmentOrder .field-value-input-shipmentID {
