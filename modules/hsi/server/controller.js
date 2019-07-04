@@ -337,7 +337,7 @@ async function request(request, req) {
         client_id: data.auth.client_id,
         client_secret: data.auth.client_secret,
         grant_type: 'refresh_token',
-        refresh_token: data.auth.refresh_token,
+        refresh_token: data.token.refresh_token,
         realm: '/'
       };
       const uri = `${data.authUrl}?${json2url(refreshData)}`;
