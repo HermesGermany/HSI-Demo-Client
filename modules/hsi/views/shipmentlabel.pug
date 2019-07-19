@@ -30,11 +30,20 @@ block content
       else
         form#shipmentlabelform.shipmentlabelform(method='POST', action='/hsi/shipmentlabel/')
           + nameAddress('receiver', __('Receiver'))
-          //-+ field(__('Receiver contact mobile (PL)'), {
-          //-  type: 'text',
-          //-  name: 'receiverContact.mobile',
-          //-  value: post['receiverContact.mobile']
-          //-})
+          + group(__('Receiver Contact'), 'receiver-contact-title', [{
+              type: 'text',
+              name: 'receiverContact.mobile',
+              attr: { placeholder: __('Mobile Number') }
+            }, {
+              type: 'text',
+              name: 'receiverContact.phone',
+              attr: { placeholder: __('Phone Number') }
+            }, {
+              type: 'text',
+              name: 'receiverContact.mail',
+              attr: { placeholder: __('Mail Address') }
+            }]
+          )
           + nameAddress('sender', __('Sender'))
           + parcel()
           + services()

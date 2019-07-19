@@ -341,6 +341,7 @@ async function request(request, req) {
         realm: '/'
       };
       const uri = `${data.authUrl}?${json2url(refreshData)}`;
+      console.log(uri);
       const response = await hsiRequest({
         method: 'post',
         url: uri,
