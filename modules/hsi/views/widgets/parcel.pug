@@ -36,6 +36,10 @@ mixin parcel()
         posttext: 'mm'
       }]
     )
+    + field(__('Volume'), {
+      type: 'text',
+      name: 'parcel.parcelVolume'
+    }, 'dl')
     + select(__('Product type'),
       'parcel.productType',
       {
