@@ -26,6 +26,16 @@ block content
       else
         form#returnpickuporderform.returnpickuporderform(method='POST', action='/hsi/returnpickuporder/')
           + nameAddress('pickup', __('Pickup'))
+          + group(__('Pickup Contact'), 'pickup-contact-title', [{
+              type: 'text',
+              name: 'pickupContact.phone',
+              attr: { placeholder: __('Phone Number') }
+            }, {
+              type: 'text',
+              name: 'pickupContact.mobile',
+              attr: { placeholder: __('Mobile Number') }
+            }]
+          )
           + field(__('Pickup date'), {
               type: 'text',
               name: 'pickupDate',
