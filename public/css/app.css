@@ -46,6 +46,9 @@ div {
 .header.production {
   background-color: #ffaaaa;
 }
+.field.hidden {
+  display: none;
+}
 .field-value-group {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -75,6 +78,9 @@ div {
             flex: 0 0 49%;
   }
 }
+.field-value .link {
+  color: #ffffff;
+}
 .fieldset {
   border: 0;
   padding: 0;
@@ -85,14 +91,16 @@ div {
   padding: 0.5em 0;
 }
 .fieldset-name-address .field-value-input-receiverName_lastname,
-.fieldset-name-address .field-value-input-senderName_lastname {
+.fieldset-name-address .field-value-input-senderName_lastname,
+.fieldset-name-address .field-value-input-pickupName_lastname {
   -webkit-box-flex: 1;
       -ms-flex: 1 0 100%;
           flex: 1 0 100%;
   margin-right: 0;
 }
 .fieldset-name-address .field-value-input-receiverAddress_street,
-.fieldset-name-address .field-value-input-senderAddress_street {
+.fieldset-name-address .field-value-input-senderAddress_street,
+.fieldset-name-address .field-value-input-pickupAddress_street {
   -webkit-box-flex: 1;
       -ms-flex: 1 0 70%;
           flex: 1 0 70%;
@@ -100,40 +108,46 @@ div {
 }
 @media all and (min-width: 1050px) {
   .fieldset-name-address .field-value-input-receiverAddress_street,
-  .fieldset-name-address .field-value-input-senderAddress_street {
+  .fieldset-name-address .field-value-input-senderAddress_street,
+  .fieldset-name-address .field-value-input-pickupAddress_street {
     -webkit-box-flex: 1;
         -ms-flex: 1 0 78%;
             flex: 1 0 78%;
   }
 }
 .fieldset-name-address .field-value-input-receiverAddress_houseNumber,
-.fieldset-name-address .field-value-input-senderAddress_houseNumber {
+.fieldset-name-address .field-value-input-senderAddress_houseNumber,
+.fieldset-name-address .field-value-input-pickupAddress_houseNumber {
   -webkit-box-flex: 0;
       -ms-flex: 0 0 5em;
           flex: 0 0 5em;
 }
 .fieldset-name-address .field-value-input-receiverAddress_countryCode,
-.fieldset-name-address .field-value-input-senderAddress_countryCode {
+.fieldset-name-address .field-value-input-senderAddress_countryCode,
+.fieldset-name-address .field-value-input-pickupAddress_countryCode {
   -webkit-box-flex: 0;
       -ms-flex: 0 0 4em;
           flex: 0 0 4em;
   margin-right: 0.5em;
 }
 .fieldset-name-address .field-value-input-receiverAddress_zipCode,
-.fieldset-name-address .field-value-input-senderAddress_zipCode {
+.fieldset-name-address .field-value-input-senderAddress_zipCode,
+.fieldset-name-address .field-value-input-pickupAddress_zipCode {
   -webkit-box-flex: 0;
       -ms-flex: 0 0 5em;
           flex: 0 0 5em;
   margin-right: 0.5em;
 }
 .fieldset-name-address .field-value-input-receiverAddress_town,
-.fieldset-name-address .field-value-input-senderAddress_town {
+.fieldset-name-address .field-value-input-senderAddress_town,
+.fieldset-name-address .field-value-input-pickupAddress_town {
   -webkit-box-flex: 1;
       -ms-flex: 1 0 50%;
           flex: 1 0 50%;
 }
 .fieldset-name-address .field .field-value .input-text[name='receiverName.title'],
-.fieldset-name-address .field .field-value .input-text[name='senderName.title'] {
+.fieldset-name-address .field .field-value .input-text[name='senderName.title'],
+.fieldset-name-address .field .field-value .input-text[name='pickupName.title'] {
   width: 10em;
 }
 .fieldset-parcel .field-value-input-parcel_parcelWidth,
@@ -158,18 +172,23 @@ div {
   margin-left: 0.5em;
 }
 .fieldset-services .field-value .field-value-input-service_householdSignatureService,
+.fieldset-services .field-value .field-value-input-service_redirectionProhibitedService,
+.fieldset-services .field-value .field-value-input-service_excludeParcelShopAuthorization,
 .fieldset-services .field-value .field-value-input-service_signatureService {
   -ms-flex-preferred-size: 100%;
       flex-basis: 100%;
 }
-.fieldset-services .field-value .field-value-input-service_cashOnDeliveryService_amount {
+.fieldset-services .field-value .field-value-input-service_cashOnDeliveryService_amount,
+.fieldset-services .field-value .field-value-input-service_cashOnDeliveryService_bankTransferAmount {
   -ms-flex-preferred-size: 6em;
       flex-basis: 6em;
   margin-right: 0.5em;
 }
-.fieldset-services .field-value .field-value-input-service_cashOnDeliveryService_currency {
-  -ms-flex-preferred-size: 5em;
-      flex-basis: 5em;
+.fieldset-services .field-value .field-value-input-service_cashOnDeliveryService_currency,
+.fieldset-services .field-value .field-value-input-service_cashOnDeliveryService_bankTransferCurrency {
+  -ms-flex-preferred-size: 4em;
+      flex-basis: 4em;
+  margin-right: 1.5em;
 }
 .fieldset-services .field-value .field-value-input-service_customerAlertService_notificationNumber {
   max-width: 15em;
@@ -199,18 +218,59 @@ div {
 .field-value > .field-value-input.field-value-input-jsonRequest .input-textarea {
   font-size: 0.9em;
 }
-.shipmentInfo .field-value-input-shipmentOrderID {
+.shipmentInfo .field-value-input-shipmentOrderID,
+.shipmentorderlist .field-value-input-shipmentOrderID {
   max-width: 9em;
 }
-.shipmentInfo .field-value-input-partnerID {
+.shipmentInfo .field-value-input-partnerID,
+.shipmentorderlist .field-value-input-partnerID {
   max-width: 7em;
 }
 .shipmentInfo .field-value-input-shipmentOrderStartDate,
-.shipmentInfo .field-value-input-shipmentOrderEndDate {
+.shipmentorderlist .field-value-input-shipmentOrderStartDate,
+.shipmentInfo .field-value-input-shipmentOrderEndDate,
+.shipmentorderlist .field-value-input-shipmentOrderEndDate {
   max-width: 7em;
 }
 .shipmentOrder .field-value-input-shipmentID {
   max-width: 15em;
+}
+.page {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  min-height: 100vh;
+}
+.header {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 1%;
+          flex: 0 0 1%;
+}
+.content {
+  -webkit-box-flex: 1;
+      -ms-flex: 1 0 90%;
+          flex: 1 0 90%;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1200px;
+  padding: 2em 1em;
+  width: calc(100% - 2em);
+}
+.footer {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 1%;
+          flex: 0 0 1%;
+}
+.error {
+  background: #ffcccc;
+  border: 1px solid #ff6666;
+  font-size: 1.25em;
+  margin: 0 0 0.5em;
+  padding: 1em;
 }
 .flex-wrapper {
   -ms-flex-line-pack: start;
@@ -510,41 +570,4 @@ div {
 }
 .header-breadcrumb-label:before {
   content: '> ';
-}
-.page {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  min-height: 100vh;
-}
-.header {
-  -webkit-box-flex: 0;
-      -ms-flex: 0 0 1%;
-          flex: 0 0 1%;
-}
-.content {
-  -webkit-box-flex: 1;
-      -ms-flex: 1 0 90%;
-          flex: 1 0 90%;
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 1200px;
-  padding: 2em 1em;
-  width: calc(100% - 2em);
-}
-.footer {
-  -webkit-box-flex: 0;
-      -ms-flex: 0 0 1%;
-          flex: 0 0 1%;
-}
-.error {
-  background: #ffcccc;
-  border: 1px solid #ff6666;
-  font-size: 1.25em;
-  margin: 0 0 0.5em;
-  padding: 1em;
 }

@@ -23,16 +23,30 @@ mixin parcel()
         type: 'text',
         name: 'parcel.parcelWidth',
         attr: { placeholder: __('Width') },
-        posttext: 'cm'
+        posttext: 'mm'
       },{
         type: 'text',
         name: 'parcel.parcelHeight',
         attr: { placeholder: __('Height') },
-        posttext: 'cm'
+        posttext: 'mm'
       }, {
         type: 'text',
         name: 'parcel.parcelDepth',
         attr: { placeholder: __('Depth') },
-        posttext: 'cm'
+        posttext: 'mm'
       }]
+    )
+    + field(__('Volume'), {
+      type: 'text',
+      name: 'parcel.parcelVolume'
+    }, 'dl')
+    + select(__('Product type'),
+      'parcel.productType',
+      {
+        '': __('no value'),
+        'PARCEL': __('PARCEL'),
+        'BAG': __('BAG'),
+        'BIKE': __('BIKE'),
+        'LARGE_ITEM': __('LARGE_ITEM')
+      }
     )

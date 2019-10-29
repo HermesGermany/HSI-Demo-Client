@@ -12,11 +12,12 @@ block content
   div#hsi.hsi.flex-wrapper
     include widgets/header.pug
     #hsi-container.hsi-container.flex-block.flex-center
-      if session.username && session.authData
-        h2 #{__('Logged in as %s', session.username)}
-        if Object.keys(post).length > 0 && response
-          h3 Request
+      if locals.authData && Object.keys(authData).length > 0
+        h2 #{__('Logged in as %s', authData.username)}
+        if locals.uri
+          h3 Request-URL
           p= uri
+        if locals.response
           h3 Response
           pre= JSON.stringify(response, null, 2)
         ul.links
@@ -26,18 +27,23 @@ block content
             a.link-shipmentorderlabel(href='/hsi/shipmentorderlabel/') #{__('Create Label for Shipment Order')}
           li
             a.link-shipmentlabel(href='/hsi/shipmentlabel/') #{__('Create Shipment Order and Label')}
-          li !{'[ '}
-            a.link-returnorder_v1(href='/hsi/returnorder_v1/') #{__('Create Return Order (Version 1)')}
-            | !{' ]'}
-          li !{'[ '}
-            a.link-returnorderlabel_v1(href='/hsi/returnorderlabel_v1/') #{__('Create Label for Return Order (Version 1)')}
-            | !{' ]'}
+          li
+            a.link-shipmentlabel(href='/hsi/shipmentorderlist/') #{__('Shipment Order List')}
+          //-li !{'[ '}
+          //-  a.link-returnorder_v1(href='/hsi/returnorder_v1/') #{__('Create Return Order (Version 1)')}
+          //-  | !{' ]'}
+          //-li !{'[ '}
+          //-  a.link-returnorderlabel_v1(href='/hsi/returnorderlabel_v1/') #{__('Create Label for Return Order (Version 1)')}
+          //-  | !{' ]'}
           li
             a.link-returnorder_v2(href='/hsi/returnorder_v2/') #{__('Create Return Order (Version 2)')}
           li
             a.link-returnorderlabel_v2(href='/hsi/returnorderlabel_v2/') #{__('Create Label for Return Order (Version 2)')}
           li
-            a.link-returnlabel_v2(href='/hsi/returnlabel_v2/') #{__('Create Return Order and Label')}
+            a.link-returnlabel_v2(href='/hsi/returnlabel_v2/') #{__('Create Return Order and Label (Version 2)')}
+          if targetEnv == 'int'
+            li
+              a.link-returnlabel_v2(href='/hsi/returnpickuporder/') #{__('Create Return Pickup Order')}
           li
             a.link-shipmentinfo(href='/hsi/shipmentinfo/') #{__('Get Shipment Order Info (11 digit ShipmentOrderID)')}
           li
@@ -46,6 +52,19 @@ block content
             a.link-shipmenthistory(href='/hsi/shipmenthistory/') #{__('Get Shipment History (14/20 digit ShipmentID / Barcode)')}
           li
             a.link-jsoninput(href='/hsi/jsoninput/') #{__('JSON-Request-Input')}
+      else if locals.authCodeLink
+        h2.subheadline #{__('Login')}
+        if (error)
+          if (error.response)
+            .error #{error.response.status} #{__(error.response.statusText)}<br />
+              pre error.response.data: #{JSON.stringify(error.response.data, null, 2)}
+          else
+            .error #{error}
+        form#loginform.loginform(method='POST', action='/hsi/')
+          .field(class='field_authorization_code')
+            .field-label= ' '
+            .field-value
+              a.link.link-authorization_code(href=authCodeLinkInt) #{__('authorization_code Grant')}
       else
         h2.subheadline #{__('Login')}
         if (error)
@@ -64,6 +83,24 @@ block content
               },
               selected: 'int'
           })
+          + field('', {
+              type: 'radio',
+              name: 'loginDetails',
+              entries: {
+                'client': __('Client-ID Login'),
+                'password': __('Client-ID + Username/Password'),
+                'authorization_code': __('Authorization-Code')
+              },
+              selected: 'client'
+          })
+          + field(__('Client-ID'), {
+              type: 'text',
+              name: 'client_id'
+          })
+          + field(__('Client-Secret'), {
+              type: 'text',
+              name: 'client_secret'
+          })
           + field(__('Username'), {
               type: 'text',
               name: 'username'
@@ -71,6 +108,10 @@ block content
           + field(__('Password'), {
               type: 'password',
               name: 'password'
+          })
+          + field(__('Redirect URI'), {
+              type: 'text',
+              name: 'redirect_uri'
           })
           + field('', {
             type: 'submit',

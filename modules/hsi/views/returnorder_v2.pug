@@ -19,9 +19,7 @@ block content
     #hsi-container.hsi-container.flex-block.flex-center
       h2 #{__('Create Return Order (Version 2)')}
       include widgets/error.pug
-      if request
-        h3 Request
-        pre= JSON.stringify(request, null, 2)
+      include widgets/request.pug
       if response
         h3 Response
         pre= JSON.stringify(response, null, 2)
@@ -50,6 +48,11 @@ block content
                 type: 'text',
                 name: 'clientReference',
                 value: post.clientReference
+            })
+            + field(__('Client Reference 2'), {
+                type: 'text',
+                name: 'clientReference2',
+                value: post.clientReference2
             })
             + field(__('Mandator'), {
                 type: 'text',

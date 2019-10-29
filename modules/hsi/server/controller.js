@@ -7,7 +7,6 @@
 'use strict';
 
 const hsiRequest = require('axios-https-proxy-fix'),
-  fs = require('fs'),
   fsPromises = require('fs').promises,
   path = require('path'),
   config = require('../../../lib/config'),
@@ -17,11 +16,6 @@ const viewBase = path.join(path.dirname(__dirname), 'views');
 
 const moduleConfig = config.modules.hsi;
 const hsiConfig = moduleConfig.HSI;
-
-let authData;
-if (fs.existsSync('auth.json')) {
-  authData = require(path.join(__dirname, '..', '..', '..', 'auth.json'));
-}
 
 /**
  * ### index page including login
@@ -34,18 +28,36 @@ if (fs.existsSync('auth.json')) {
 const index = async (req, res) => {
   let templateData = getServerData(req);
   let statusCode = 200;
-  if (req.method === 'POST' && req.body && req.body.username) {
+  if (req.method === 'POST' && req.body &&
+    req.body.loginDetails === 'authorization_code' &&
+    req.body.client_id &&
+    req.body.redirect_uri) {
+    const codeData = {
+      client_id: req.body.client_id,
+      client_secret: req.body.client_secret,
+      redirect_uri: req.body.redirect_uri,
+      response_type: 'code',
+      realm: '/',
+      state: req.session.id
+    };
+    templateData.authCodeLink = hsiConfig.codeURL[req.body.targetEnv] + '?' + json2url(codeData);
+    model.put('targetEnv', req.body.targetEnv);
+    model.put('authUrl', hsiConfig.authURL[req.body.targetEnv]);
+    model.put('auth', codeData);
+  } else if (req.method === 'POST' && req.body && req.body.client_id) {
     templateData.post = {
+      client_id: req.body.client_id,
+      client_secret: req.body.client_secret,
       username: req.body.username,
       targetEnv: req.body.targetEnv
     };
     try {
       templateData.request = { };
       const authData = {
-        username: req.body.username,
-        password: req.body.password,
-        client_id: req.body.username,
-        client_secret: req.body.password,
+        username: req.body.username || req.body.client_id,
+        password: req.body.password || req.body.client_secret,
+        client_id: req.body.client_id,
+        client_secret: req.body.client_secret,
         grant_type: 'password',
         realm: '/'
       };
@@ -59,19 +71,18 @@ const index = async (req, res) => {
         proxy: moduleConfig.proxy
       });
       templateData.uri = uri;
+      model.put('targetEnv', req.body.targetEnv);
+      model.put('authUrl', hsiConfig.authURL[req.body.targetEnv]);
+      model.put('auth', authData);
+      model.put('token', response.data);
+      templateData = getServerData(req);
       templateData.response = Object.assign({}, response.data);
-      req.session.authData = response.data;
-      req.session.username = req.body.username;
-      req.session.authData.client_id = req.body.username;
-      req.session.authData.client_secret = req.body.password;
-      req.session.authData.targetEnv = req.body.targetEnv;
-      req.session.authData.timestamp = new Date().getTime();
-      // TODO: this should be stored in a database and connected with the specific user
-      const saveData = JSON.stringify(req.session.authData, null, 2);
-      await fsPromises.writeFile('auth.json', saveData);
     } catch (error) {
-      req.session.authData = {};
-      req.session.username = undefined;
+      model.put('targetEnv', '');
+      model.put('authUrl', '');
+      model.put('auth', {});
+      model.put('token', {});
+      templateData = getServerData(req);
       templateData.error = error;
       if (error.response && error.response.status) {
         statusCode = error.response.status;
@@ -81,6 +92,7 @@ const index = async (req, res) => {
     }
   }
   res.status(statusCode).render(path.join(viewBase, 'index.pug'), templateData);
+  model.save();
 };
 
 /**
@@ -96,7 +108,7 @@ const execPostRequest = async (req, res) => {
   if (req.method === 'POST' && req.body) {
     const hsiPath = hsiConfig[reqPath + 'Path'];
     templateData.post = req.body; // if required values are missing refill the form
-    templateData.uri = `${hsiConfig.baseURL[req.session.authData.targetEnv]}${hsiPath}`; // hsi request uri
+    templateData.uri = `${hsiConfig.baseURL[templateData.targetEnv]}${hsiPath}`; // hsi request uri
     templateData.uri = templateData.uri.replace(/:([^\/]+):/, (match, key) => req.body[key]); // replace link variable
     templateData.request = { // prepare request to HSI server
       method: 'post',
@@ -127,7 +139,7 @@ const execGetRequest = async (req, res) => {
   if (req.method === 'POST' && req.body) {
     const hsiPath = hsiConfig[reqPath + 'Path'];
     templateData.post = req.body; // if required values are missing refill the form
-    templateData.uri = `${hsiConfig.baseURL[req.session.authData.targetEnv]}${hsiPath}?${json2url(req.body)}`; // request uri
+    templateData.uri = `${hsiConfig.baseURL[templateData.targetEnv]}${hsiPath}?${json2url(req.body)}`; // request uri
     templateData.request = { // prepare request to HSI server
       method: 'get',
       url: templateData.uri
@@ -157,7 +169,11 @@ const jsoninput = async (req, res) => {
     templateData.post = req.body;
     try {
       const parsedJson = JSON.parse(req.body.jsonRequest);
-      templateData.post = json2form(parsedJson.data);
+      if (parsedJson.data) {
+        templateData.post = json2form(parsedJson.data);
+      } else {
+        templateData.post = json2form(parsedJson);
+      }
       reqPath = req.body.route;
     } catch (error) {
       templateData.error = error;
@@ -176,10 +192,97 @@ const jsoninput = async (req, res) => {
  * @param {object} res - result
  */
 const logout = async (req, res) => {
+  model.put('targetEnv', '');
+  model.put('authUrl', '');
+  model.put('auth', {});
+  model.put('token', {});
   await fsPromises.writeFile('auth.json', '{}');
-  req.session.username = undefined;
-  req.session.authData = {};
   res.redirect('/hsi/');
+  model.save();
+};
+
+/**
+ * ### authorization_code callback
+ *
+ * get code and exchange for token - this is fixed for this server, see redirect_uri
+ *
+ * @param {object} req - request
+ * @param {object} res - result
+  */
+const callback = async (req, res) => {
+  const code = req.query.code;
+  const state = req.query.state;
+  let templateData = getServerData(req);
+  let statusCode = 200;
+  if (state !== req.session.id) {
+    model.put('authUrl', '');
+    model.put('auth', {});
+    model.put('token', {});
+    templateData = getServerData(req);
+    statusCode = 500;
+    templateData.error = 'received code for wrong session';
+  } else if (code) {
+    const modelData = model.getData();
+    const queryData = {
+      grant_type: 'authorization_code',
+      client_id: modelData.auth.client_id,
+      client_secret: modelData.auth.client_secret,
+      redirect_uri: modelData.auth.redirect_uri,
+      code: code,
+      state: req.session.id
+    };
+    const request = {
+      method: 'post',
+      url: `${hsiConfig.authURL[modelData.targetEnv]}?${json2url(queryData)}`,
+      headers: {
+        accept: 'application/json'
+      }
+    };
+    if (moduleConfig.proxy) {
+      request.proxy = moduleConfig.proxy;
+    }
+    try {
+      const response = await hsiRequest(request);
+      model.put('token', response.data);
+      model.save();
+      const tokeninfoRequest = {
+        method: 'get',
+        url: `${hsiConfig.infoURL[modelData.targetEnv]}?access_token=${modelData.token.access_token}`,
+        headers: {
+          accept: 'application/json'
+        }
+      };
+      if (moduleConfig.proxy) {
+        tokeninfoRequest.proxy = moduleConfig.proxy;
+      }
+      const tokenInfo = await hsiRequest(tokeninfoRequest);
+      queryData.username = tokenInfo.data.username;
+      model.put('auth', queryData);
+      templateData = getServerData(req);
+      templateData.response = Object.assign({}, response.data);
+    } catch (error) {
+      model.put('authUrl', '');
+      model.put('auth', {});
+      model.put('token', {});
+      templateData = getServerData(req);
+      templateData.error = error;
+      if (error.response && error.response.status) {
+        statusCode = error.response.status;
+      } else {
+        statusCode = 500;
+      }
+    }
+  } else {
+    model.put('authUrl', '');
+    model.put('auth', {});
+    model.put('token', {});
+    templateData = getServerData(req);
+    console.log('no code received, please examine and correct output', req);
+    templateData.error = 'no code received';
+    statusCode = 400;
+  }
+  res.status(statusCode).render(path.join(viewBase, 'index.pug'), templateData);
+  model.save();
 };
 
 module.exports = {
@@ -187,7 +290,8 @@ module.exports = {
   execPostRequest: execPostRequest,
   execGetRequest: execGetRequest,
   jsoninput: jsoninput,
-  logout: logout
+  logout: logout,
+  callback: callback
 };
 
 /**
@@ -197,14 +301,15 @@ module.exports = {
  * else user has to login again
  *
  * @param {object} request - for HSI server request
- * @param {object} req - from browser with user session data
+ * @param {object} req - from browser
  */
 async function request(request, req) {
+  const data = model.getData();
   let result = { };
   const requestHeaders = request.data ? request.data.headers : {};
   request.headers = Object.assign({
     'Content-Type': 'application/json',
-    'Authorization': req.session.authData.token_type + ' ' + req.session.authData.access_token,
+    'Authorization': data.token.token_type + ' ' + data.token.access_token,
     'Accept-Language': req.getLocale().toUpperCase()
   }, requestHeaders);
   if (request.data) {
@@ -224,18 +329,19 @@ async function request(request, req) {
     }
   }
   // refresh access token if 401 and refresh token available
-  if (result.statusCode === 401 && authData.refresh_token) {
+  if (result.statusCode === 401 && data.token.refresh_token) {
     delete result.error;
     result.statusCode = 200;
     try {
       const refreshData = {
-        client_id: authData.client_id,
-        client_secret: authData.client_secret,
+        client_id: data.auth.client_id,
+        client_secret: data.auth.client_secret,
         grant_type: 'refresh_token',
-        refresh_token: authData.refresh_token,
+        refresh_token: data.token.refresh_token,
         realm: '/'
       };
-      const uri = `${hsiConfig.authURL[req.session.authData.targetEnv]}?${json2url(refreshData)}`;
+      const uri = `${data.authUrl}?${json2url(refreshData)}`;
+      console.log(uri);
       const response = await hsiRequest({
         method: 'post',
         url: uri,
@@ -244,13 +350,9 @@ async function request(request, req) {
         proxy: moduleConfig.proxy
       });
       console.log('Access Token refreshed');
-      req.session.authData.access_token = response.data.access_token;
-      req.session.authData.refresh_token = response.data.refresh_token;
-      req.session.authData.timestamp = new Date().getTime();
-      const saveData = JSON.stringify(req.session.authData, null, 2);
-      await fsPromises.writeFile('auth.json', saveData);
+      model.put('token', response.data);
       // retry request with the new access token
-      request.headers.Authorization = req.session.authData.token_type + ' ' + req.session.authData.access_token;
+      request.headers.Authorization = response.data.token_type + ' ' + response.data.access_token;
       result.response = await hsiRequest(request);
     } catch (error) {
       result.error = error;
@@ -262,6 +364,7 @@ async function request(request, req) {
     }
   }
   delete request.proxy;
+  model.save();
   return new Promise(resolve => resolve(result));
 }
 
@@ -339,20 +442,24 @@ function getServerData(req) {
   if (host.indexOf(':') > 0) {
     livereloadPort = parseInt(host.split(':')[1], 10) + 1;
   }
-  if (authData && Object.keys(authData).length > 0 && (req.session.authData === undefined || req.session.authData.length === 0)) {
-    req.session.authData = authData;
-    req.session.username = authData.client_id;
-  }
+  const codeData = {
+    response_type: 'code',
+    client_id: 'hsi.int.local8080',
+    redirect_uri: 'http://localhost:8080/hsi/authcode',
+    realm: '/',
+    state: req.session.id
+  };
+  const authCodeLinkInt = hsiConfig.codeURL.int + '?' + json2url(codeData);
+  const modelData = model.getData();
   return Object.assign({
-    environment: process.env.NODE_ENV,
     hostname: req.hostname,
     livereloadPort: livereloadPort,
     moduleName: 'hsi',
     module: moduleConfig,
-    session: req.session,
-    data: false,
-    model: model.getData(),
-    post: { }
+    authData: modelData.auth,
+    targetEnv: modelData.targetEnv,
+    post: { },
+    authCodeLinkInt: authCodeLinkInt
   },
   req.params);
 }
@@ -421,6 +528,8 @@ function setValue(obj, keys, value) {
     } else {
       if (value === 'true') {
         obj[key] = true;
+      } else if (value === 'false') {
+        obj[key] = false;
       } else {
         obj[key] = value;
       }

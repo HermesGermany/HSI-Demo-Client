@@ -1,0 +1,55 @@
+//- index.pug
+extends ../../pages/views/page.pug
+include ../../page-elements/views/form/field.pug
+include widgets/defaults.pug
+include widgets/name-address.pug
+include widgets/parcel.pug
+include widgets/services.pug
+
+block title
+  | #{__('Create Return Pickup Order')}
+
+append breadcrumbs
+  li.header-breadcrumb
+    a.header-breadcrumb-link(href='/hsi/returnpickuporder/') #{__('Create Return Pickup Order')}
+
+block content
+  div#hsi.hsi.flex-wrapper
+    include widgets/header.pug
+    #hsi-container.hsi-container.flex-block.flex-center
+      h2 #{__('Create Return Pickup Order')}
+      include widgets/error.pug
+      include widgets/request.pug
+      if response
+        h3 Response
+        pre= JSON.stringify(response, null, 2)
+      else
+        form#returnpickuporderform.returnpickuporderform(method='POST', action='/hsi/returnpickuporder/')
+          + nameAddress('pickup', __('Pickup'))
+          + group(__('Pickup Contact'), 'pickup-contact-title', [{
+              type: 'text',
+              name: 'pickupContact.phone',
+              attr: { placeholder: __('Phone Number') }
+            }, {
+              type: 'text',
+              name: 'pickupContact.mobile',
+              attr: { placeholder: __('Mobile Number') }
+            }]
+          )
+          + field(__('Pickup date'), {
+              type: 'text',
+              name: 'pickupDate',
+              placeholder: 'yyyy-mm-dd'
+          })
+          fieldset.fieldset.fieldset-other-settings
+            legend.fieldset-legend #{__('Other Settings')}
+            + field(__('Mandator'), {
+                type: 'text',
+                name: 'mandator',
+                value: post.mandator
+            })
+          + field('', {
+            type: 'submit',
+            value: __('create return pickup order'),
+            class: 'submit'
+          })

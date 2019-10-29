@@ -1,0 +1,8 @@
+//- widgets/error.pug
+if request
+  - headers = ""
+  each value, key in request.headers
+    - headers += key + ': ' + value + '\n'
+  h3 Request
+  pre= request.method.toUpperCase() + ' ' + request.url + '\n' + headers
+  pre= JSON.stringify(request.data, null, 2)

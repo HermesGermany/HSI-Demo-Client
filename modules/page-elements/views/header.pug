@@ -1,6 +1,6 @@
 //- header.pug
 block header
-  #header.header(class=(session && session.authData && session.authData.targetEnv == 'prod' ? 'production' : 'test'))
+  #header.header(class=(locals.targetEnv && targetEnv == 'prod' ? 'production' : 'test'))
     #header-content.header-content.flex-wrapper
       .flex-block.flex-left
         ul.header-breadcrumbs
@@ -9,16 +9,14 @@ block header
               a.header-breadcrumb-link(href='/app/') Home
             li.header-breadcrumb
               a.header-breadcrumb-link(href='/'+ moduleName + '/')= module.name
-      if session
-        .flex-block.flex-right
-          #login-status.login-status
-            block loginStatus
-              if session.username
-                .login-status-ok #{__('Logged in as %s', session.username)}
-                | #{' '}
-                .login-status-logout
-                  a.logout-link(href='/hsi/logout/') #{__('logout')}
-              else
-                .login-status-login
-                  a.login-link(href='/hsi/') #{__('login')}
-
+      .flex-block.flex-right
+        #login-status.login-status
+          block loginStatus
+            if locals.authData && authData.username
+              .login-status-ok #{__('Logged in as %s', authData.username)}
+              | #{' '}
+              .login-status-logout
+                a.logout-link(href='/hsi/logout/') #{__('logout')}
+            else
+              .login-status-login
+                a.login-link(href='/hsi/') #{__('login')}
